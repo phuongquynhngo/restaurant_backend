@@ -15,7 +15,7 @@ const pool = mysql.createPool({
 // const result = await pool.query("SELECT * FROM customers")
 // const rows = result[0]
 // console.log(rows)
-async function getAllcustomers() {
+export async function getAllcustomers() {
    const [rows] = await pool.query("SELECT * FROM customers")
    return rows
  }
