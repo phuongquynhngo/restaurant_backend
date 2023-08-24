@@ -24,6 +24,7 @@ async function getAllcustomers() {
 
 
  //get a single customer
+//using parameterized query to keeps user input separate from the actual commands to prevent SQL injection
  export async function getCustomer(id) {
    const [rows] = await pool.query(`
    SELECT * 
@@ -34,6 +35,7 @@ async function getAllcustomers() {
  }
  const customer = await getCustomer(10)
  console.log("single customer:", customer)
+
 
 // const db = mysql.createConnection({
 //   host: 'localhost',
