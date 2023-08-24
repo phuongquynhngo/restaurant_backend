@@ -12,8 +12,13 @@ const pool = mysql.createPool({
 // const result = await pool.query("SELECT * FROM customers")
 // const rows = result[0]
 // console.log(rows)
-const [rows] = await pool.query("SELECT * FROM customers")
-console.log(rows)
+async function getAllnotes() {
+   const [rows] = await pool.query("SELECT * FROM customers")
+   return rows
+ }
+ 
+ const notes = await getAllnotes()
+ console.log(notes)
 
 // const db = mysql.createConnection({
 //   host: 'localhost',
