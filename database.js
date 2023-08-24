@@ -5,7 +5,7 @@ dotenv.config()
 //using pool to reuse connections to the database 
 //.promise() method allows using async/await
 const pool = mysql.createPool({
-   host: process.env.MYSQL_HOST,
+  host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE
@@ -35,8 +35,8 @@ export async function getAllcustomers() {
  const customer = await getCustomer(10)
  console.log("single customer:", customer)
 
- //create new user
-export async function createUser(name, address, email) {
+ //create new customer
+export async function createCustomer(name, address, email) {
    const [result] = await pool.query(`
    INSERT INTO customers (name, address, email)
    VALUES (?, ?, ?)
@@ -44,11 +44,11 @@ export async function createUser(name, address, email) {
    const id = result.insertId
    return getCustomer(id)
  }
-// const result = await createUser('name', 'address', 'email')
-// console.log("new user", result)
+// const result = await createCustomer('name', 'address', 'email')
+// console.log("new customer", result)
 
-//update user
-export async function updateUser(id, name, address, email) {
+//update customer
+export async function updateCustomer(id, name, address, email) {
   await pool.query(`
   UPDATE customers
   SET name = ?, address = ?, email = ?
@@ -56,17 +56,17 @@ export async function updateUser(id, name, address, email) {
   `, [name, address, email, id]);
   return getCustomer(id);
 }
-// const updatedUser = await updateUser(6, 'new name6', 'new address', 'newemail@example.com');
-// console.log("updated user:", updatedUser);
+// const updatedCustomer = await updateCustomer(6, 'new name6', 'new address', 'newemail@example.com');
+// console.log("updated customer:", updatedCustomer);
 
-//delete user
-export async function deleteUser(id) {
-  const userToDelete = await getCustomer(id); // Get the user details before deleting
+//delete customer
+export async function deleteCustomer(id) {
+  const customerToDelete = await getCustomer(id); // Get the customer details before deleting
   await pool.query(`
   DELETE FROM customers
   WHERE id = ?
   `, [id]);
-  return userToDelete;
+  return customerToDelete;
 }
-// const deletedUser = await deleteUser(1);
-// console.log("deleted user:", deletedUser);
+// const deletedCustomer = await deleteCustomer(1);
+// console.log("deleted customer:", deletedCustomer);

@@ -11,8 +11,8 @@ CREATE TABLE customers (
 -- @block
 INSERT INTO customers (name, address)
 VALUES 
-('Customer ABC1', 'xyz street  12, Duisburg'),
-('Customer ABC2', 'bcd street 12, Duisburg');
+('Customer ABC1', 'xyz street  12, Duisburg', 'email123'),
+('Customer ABC2', 'bcd street 12, Duisburg', 'email123');
 
 -- @block
 ALTER TABLE customers
@@ -22,7 +22,7 @@ ADD email VARCHAR(255) NOT NULL;
 -- @block
 UPDATE customers
 SET email = 'abc1@gmail.com'
-WHERE id = 1;
+WHERE id = 2;
 
 
 -- @block
