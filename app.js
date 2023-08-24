@@ -36,6 +36,19 @@ async function getAllcustomers() {
  const customer = await getCustomer(10)
  console.log("single customer:", customer)
 
+ //create new user
+export async function createUser(name, address, email) {
+   const [result] = await pool.query(`
+   INSERT INTO customers (name, address, email)
+   VALUES (?, ?, ?)
+   `, [name, address, email])
+   const id = result.insertId
+   return getCustomer(id)
+ }
+const result = await createUser('name', 'address', 'email')
+console.log("new user", result)
+
+
 
 // const db = mysql.createConnection({
 //   host: 'localhost',
