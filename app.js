@@ -2,6 +2,8 @@ import mysql from 'mysql2'
 import dotenv from 'dotenv'
 dotenv.config()
 
+//using pool to reuse connections to the database 
+//.promise() method allows using async/await
 const pool = mysql.createPool({
    host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
@@ -9,16 +11,29 @@ const pool = mysql.createPool({
   database: process.env.MYSQL_DATABASE
 }).promise()
 
+//get all customers
 // const result = await pool.query("SELECT * FROM customers")
 // const rows = result[0]
 // console.log(rows)
-async function getAllnotes() {
+async function getAllcustomers() {
    const [rows] = await pool.query("SELECT * FROM customers")
    return rows
  }
- 
- const notes = await getAllnotes()
- console.log(notes)
+ const customers = await getAllcustomers()
+ console.log("all customers:", customers)
+
+
+ //get a single customer
+ export async function getCustomer(id) {
+   const [rows] = await pool.query(`
+   SELECT * 
+   FROM customers
+   WHERE id = ?
+   `, [id])
+   return rows[0]
+ }
+ const customer = await getCustomer(10)
+ console.log("single customer:", customer)
 
 // const db = mysql.createConnection({
 //   host: 'localhost',
