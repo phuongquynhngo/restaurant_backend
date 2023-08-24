@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "restaurant-backend-app",
   "type": "module",
-  "main": "app.js",
+  "main": "database.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "dev": "nodemon database.js"
   },
   "repository": {
     "type": "git",

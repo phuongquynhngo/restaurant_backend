@@ -22,7 +22,6 @@ export async function getAllcustomers() {
  const customers = await getAllcustomers()
  console.log("all customers:", customers)
 
-
  //get a single customer
 //using parameterized query to keeps user input separate from the actual commands to prevent SQL injection
  export async function getCustomer(id) {
@@ -45,29 +44,29 @@ export async function createUser(name, address, email) {
    const id = result.insertId
    return getCustomer(id)
  }
-const result = await createUser('name', 'address', 'email')
-console.log("new user", result)
+// const result = await createUser('name', 'address', 'email')
+// console.log("new user", result)
 
+//update user
+export async function updateUser(id, name, address, email) {
+  await pool.query(`
+  UPDATE customers
+  SET name = ?, address = ?, email = ?
+  WHERE id = ?
+  `, [name, address, email, id]);
+  return getCustomer(id);
+}
+// const updatedUser = await updateUser(6, 'new name6', 'new address', 'newemail@example.com');
+// console.log("updated user:", updatedUser);
 
-
-// const db = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'your_username',
-//   password: 'your_password',
-//   database: 'your_database'
-// });
-
-// db.connect((err) => {
-//   if (err) throw err;
-//   console.log('Connected to MySQL database');
-// });
-//  app.get("/api", (req, res) => {
-//     res.json({
-//         success : 1,
-//         message : "This is rest apis working"
-//     });
-//  });
-
-//  app.listen(3000, () =>{
-//     console.log("Server up and running");
-//  });
+//delete user
+export async function deleteUser(id) {
+  const userToDelete = await getCustomer(id); // Get the user details before deleting
+  await pool.query(`
+  DELETE FROM customers
+  WHERE id = ?
+  `, [id]);
+  return userToDelete;
+}
+// const deletedUser = await deleteUser(1);
+// console.log("deleted user:", deletedUser);
