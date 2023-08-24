@@ -1,0 +1,27 @@
+{
+  "name": "restaurant-backend-app",
+  "version": "1.0.0",
+  "description": "restaurant-backend-app",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "restaurant-backend-app"
+  },
+  "keywords": [
+    "node.js",
+    "mySQL",
+    "express.js"
+  ],
+  "author": "Quynh Ngo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0",
+    "nodemon": "^3.0.1"
+  }
+}
