@@ -12,7 +12,7 @@ app.use('/', routes);
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to user fullstack application." });
+  res.json({ message: "Welcome to restaurant backend application." });
 });
 
 
