@@ -15,15 +15,18 @@
   "keywords": [
     "node.js",
     "mySQL",
+    "sequelize",
     "express.js"
   ],
   "author": "Quynh Ngo",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^2.0.0-beta.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^5.0.0-beta.1",
     "mysql2": "^3.6.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "sequelize": "^6.32.1"
   }
 }

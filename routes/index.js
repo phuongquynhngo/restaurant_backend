@@ -1,18 +1,27 @@
-import express from 'express';
-import {
-  getAllCustomersController,
-  getCustomerController,
-  createCustomerController,
-  updateCustomerController,
-  deleteCustomerController
-} from '../controllers/index.js';
+import express from "express";
+import * as categories from '../controllers/index.js';
+
 
 const router = express.Router();
 
-router.get('/customers', getAllCustomersController);
-router.get('/customers/:id', getCustomerController);
-router.post('/customers', createCustomerController);
-router.put('/customers/:id', updateCustomerController);
-router.delete('/customers/:id', deleteCustomerController);
+// Create a new category
+router.post("/", categories.createCategory);
 
-export default router;
+// Retrieve all categories
+router.get("/", categories.listAllCategories );
+
+// Retrieve a single category with id
+router.get("/:id", categories.findCategoryByID);
+
+// Update a category with id
+router.put("/:id", categories.updateCategory);
+
+// Delete a category with id
+router.delete("/:id", categories.deleteCategory);
+
+// Delete all categories
+router.delete("/", categories.deleteAllCategories);
+
+export default app => {
+  app.use('/api/categories', router);
+};

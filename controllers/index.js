@@ -1,78 +1,180 @@
-import {
-    getAllCustomers,
-    getCustomer,
-    createCustomer,
-    updateCustomer,
-    deleteCustomer
-  } from '../services/db.js';
-  
-  const handleControllerError = (res, error) => {
-    console.error(error);
-    res.status(500).send({ message: 'An error occurred.' });
+import db from "../models/index.js";
+const  Category  = db.categories;
+const Op = db.Sequelize.Op;
+
+// Create and Save a new Category
+export const createCategory = (req, res) => {
+   // Validate request
+   if (!req.body.name) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+
+  // Create a Category
+  const category = {
+    name: req.body.name,
   };
+
+  // Save Category in the database
+  Category.create(category)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Category."
+      });
+    });
   
-  export async function getAllCustomersController(req, res) {
-    try {
-      const customers = await getAllCustomers();
-      res.send(customers);
-    } catch (error) {
-      handleControllerError(res, error);
-    }
-  }
+};
+
+// Retrieve all Categories from the database.
+export const listAllCategories = (req, res) => {
   
-  export async function getCustomerController(req, res) {
-    try {
-      const id = req.params.id;
-      const customer = await getCustomer(id);
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+
+  Category.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Categories."
+      });
+    });
   
-      if (!customer) {
-        res.status(404).send({ message: "Not found Customer with id " + id });
+};
+
+// Retrieve all Categories from the database  with server-side pagination
+// export const listAllCategories = (req, res) => {
+//   const { page = 1, pageSize = 10, name } = req.query;
+//   const limit = parseInt(pageSize);
+//   const offset = (parseInt(page) - 1) * limit;
+  
+//   var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+
+//   Category.findAndCountAll({
+//     where: condition,
+//     limit,
+//     offset,
+//   })
+//     .then(data => {
+//       const totalPages = Math.ceil(data.count / limit);
+//       const response = {
+//         totalItems: data.count,
+//         totalPages,
+//         currentPage: parseInt(page),
+//         categories: data.rows,
+//       };
+//       res.send(response);
+//     })
+//     .catch(err => {
+//       res.status(500).send({
+//         message:
+//           err.message || "Some error occurred while retrieving Categories."
+//       });
+//     });
+  
+// };
+
+// Find a single Category with an id
+export const findCategoryByID = (req, res) => {
+  
+  const id = req.params.id;
+
+  Category.findByPk(id)
+    .then(data => {
+      if (data) {
+        res.send(data);
       } else {
-        res.send(customer);
+        res.status(404).send({
+          message: `Cannot find Category with id=${id}.`
+        });
       }
-    } catch (error) {
-      handleControllerError(res, error);
-    }
-  }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Category with id=" + id
+      });
+    });
   
-  export async function createCustomerController(req, res) {
-    try {
-      const { name, address, email } = req.body;
-      const customer = await createCustomer(name, address, email);
-      res.status(201).send(customer);
-    } catch (error) {
-      handleControllerError(res, error);
-    }
-  }
+};
+
+// Update a Category by the id in the request
+export const updateCategory = (req, res) => {
   
-  export async function updateCustomerController(req, res) {
-    try {
-      const id = req.params.id;
-      const { name, address, email } = req.body;
-      const updatedCustomer = await updateCustomer(id, name, address, email);
-  
-      if (!updatedCustomer) {
-        res.status(404).send({ message: "Not found Customer with id " + id });
+  const id = req.params.id;
+
+  Category.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Category was updated successfully."
+        });
       } else {
-        res.send(updatedCustomer);
+        res.send({
+          message: `Cannot update Category with id=${id}. Maybe Category was not found or req.body is empty!`
+        });
       }
-    } catch (error) {
-      handleControllerError(res, error);
-    }
-  }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Category with id=" + id
+      });
+    });
   
-  export async function deleteCustomerController(req, res) {
-    try {
-      const id = req.params.id;
-      const deletedCustomer = await deleteCustomer(id);
+};
+
+// Delete a Category with the specified id in the request
+export const deleteCategory = (req, res) => {
   
-      if (!deletedCustomer) {
-        res.status(404).send({ message: "Not found Customer with id " + id });
+  const id = req.params.id;
+
+  Category.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Category was deleted successfully!"
+        });
       } else {
-        res.send(deletedCustomer);
+        res.send({
+          message: `Cannot delete Category with id=${id}. Maybe Category was not found!`
+        });
       }
-    } catch (error) {
-      handleControllerError(res, error);
-    }
-  }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Category with id=" + id
+      });
+    });
   
+};
+
+// Delete all Categories from the database.
+export const deleteAllCategories = (req, res) => {
+  
+  Category.destroy({
+    where: {},
+    truncate: false
+  })
+    .then(nums => {
+      res.send({ message: `${nums} Categories were deleted successfully!` });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all Categories."
+      });
+    });
+  
+};
+
