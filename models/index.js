@@ -25,7 +25,8 @@
 
 //using ES6 import and export syntax
 import { Sequelize } from "sequelize";
-import defineCategoryModel from "./category.model.js";
+import CategoryModel from "./category.model.js";
+import ItemModel from "./item.model.js";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -46,6 +47,18 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.categories = defineCategoryModel(sequelize, Sequelize);
+db.categories = CategoryModel(sequelize, Sequelize);
+db.items = ItemModel(sequelize, Sequelize);
+
+//define associations between models
+//one category can have multiple items
+db.categories.hasMany(db.items, {
+    as: "items",
+    foreignKey: "category_id"
+  });
+//each item belongs to only one category 
+db.items.belongsTo(db.categories, {
+    foreignKey: "category_id"
+  });
 
 export default db;

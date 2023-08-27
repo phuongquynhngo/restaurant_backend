@@ -1,4 +1,4 @@
-const defineCategoryModel = (sequelize, Sequelize) => {
+const CategoryModel = (sequelize, Sequelize) => {
     const Category = sequelize.define("category", {
       id: {
         type: Sequelize.INTEGER,
@@ -8,22 +8,14 @@ const defineCategoryModel = (sequelize, Sequelize) => {
       name: {
         type: Sequelize.STRING,
         allowNull: false
-      },
-      createdAt: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        allowNull: false
-      },
-      updatedAt: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        allowNull: false
       }
+    }, {
+      timestamps: true // Enable timestamps (createdAt and updatedAt fields)
     });
   
     return Category;
   };
   
-  export default defineCategoryModel;
+  export default CategoryModel;
   
   

@@ -1,5 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import categoryRoutes from './routes/category.routes.js';
+import itemRoutes from './routes/item.routes.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
@@ -20,9 +22,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+// Set up category and item routes using the exported functions
+categoryRoutes(app);
+itemRoutes(app);
 
-import Routes from "./routes/index.js";
-Routes(app);
 
 import db from './models/index.js';
 db.sequelize.sync()
