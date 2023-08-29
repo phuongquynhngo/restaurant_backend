@@ -8,10 +8,10 @@ const router = express.Router();
 router.post("/", categories.createCategory);
 
 // Retrieve all categories
-router.get("/", categories.listAllCategories );
+router.get("/", categories.getAllCategories );
 
 // Retrieve a single category with id
-router.get("/:id", categories.findCategoryByID);
+router.get("/:id", categories.getCategoryByID);
 
 // Update a category with id
 router.put("/:id", categories.updateCategory);

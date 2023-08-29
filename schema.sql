@@ -83,7 +83,7 @@ VALUES
 ('Spring Rolls', 'Crispy rolls filled with vegetables and served with sweet and sour sauce.', '4.99', 1),
 ('Potstickers', 'Pan-fried dumplings filled with meat and vegetables.', '5.99', 1),
 ('Kung Pao Chicken', 'Stir-fried chicken with peanuts, vegetables, and spicy sauce.', '11.99', 2),
-('Shrimp Fried Rice', 'Stir-fried rice with shrimp, vegetables, and soy sauce.', '9.99', 3);
+('Shrimp Fried Rice', 'Stir-fried rice with shrimp, vegetables, and soy sauce.', '9.99', 2);
 
 -- @block
 SELECT * FROM items;

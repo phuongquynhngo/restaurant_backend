@@ -15,6 +15,7 @@ export const createCategory = (req, res) => {
   // Create a Category
   const category = {
     name: req.body.name,
+    image: req.body.image
   };
 
   // Save Category in the database
@@ -32,7 +33,7 @@ export const createCategory = (req, res) => {
 };
 
 // Retrieve all Categories from the database.
-export const listAllCategories = (req, res) => {
+export const getAllCategories = (req, res) => {
   
   const name = req.query.name;
   var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
@@ -51,7 +52,7 @@ export const listAllCategories = (req, res) => {
 };
 
 // Retrieve all Categories from the database  with server-side pagination
-// export const listAllCategories = (req, res) => {
+// export const getAllCategories = (req, res) => {
 //   const { page = 1, pageSize = 10, name } = req.query;
 //   const limit = parseInt(pageSize);
 //   const offset = (parseInt(page) - 1) * limit;
@@ -83,7 +84,7 @@ export const listAllCategories = (req, res) => {
 // };
 
 // Find a single Category with an id
-export const findCategoryByID = (req, res) => {
+export const getCategoryByID = (req, res) => {
   
   const id = req.params.id;
 

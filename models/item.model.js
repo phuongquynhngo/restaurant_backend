@@ -10,6 +10,10 @@ const ItemModel = (sequelize, Sequelize) => {
     price: {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false
+    },
+    image: {
+      type: Sequelize.STRING,
+      allowNull: true
     }
   }, {
     timestamps: true // Enable timestamps (createdAt and updatedAt fields)

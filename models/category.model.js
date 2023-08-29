@@ -8,6 +8,10 @@ const CategoryModel = (sequelize, Sequelize) => {
       name: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      image: {
+        type: Sequelize.STRING,
+        allowNull: true
       }
     }, {
       timestamps: true // Enable timestamps (createdAt and updatedAt fields)
