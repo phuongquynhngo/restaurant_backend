@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import categoryRoutes from './routes/category.routes.js';
 import itemRoutes from './routes/item.routes.js';
 import userRoutes from './routes/user.routes.js';
+import authRoutes from './routes/auth.route.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import corsOptions from './config/corsOptions.js';
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 categoryRoutes(app);
 itemRoutes(app);
 userRoutes(app);
+authRoutes(app);
 
 
 import db from './models/index.js';

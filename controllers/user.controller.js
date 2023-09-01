@@ -43,7 +43,7 @@ export const createUser = async (req, res) => {
     const { name, email, username, password } = req.body;
   
     if (!name || !email || !username || !password) {
-      return res.status(400).json({ message: 'Name, email, username, and password are required.' });
+      return res.status(400).json({ 'message': 'Name, email, username, and password are required.' });
     }
   
     try {
@@ -51,10 +51,10 @@ export const createUser = async (req, res) => {
       const duplicate = await checkForDuplicateUsername(username);
   
       if (duplicate) {
-        return res.status(409).json({ message: 'Username already exists.' });
+        return res.status(409).json({ 'message': 'Username already exists.' });
       }
   
-      // Encrypt the password
+      // Encrypt the password: hash and salt passwords with bcrypt
       const hashedPassword = await bcrypt.hash(password, 10);
   
       // Create a User object
@@ -69,9 +69,9 @@ export const createUser = async (req, res) => {
       await saveUserToDatabase(user);
   
       // Respond with a success message
-      res.status(201).json({ message: `New user ${username} created!` });
+      res.status(201).json({ 'message': `New user ${username} created!` });
     } catch (err) {
-      res.status(500).json({ message: err.message });
+      res.status(500).json({ 'message': err.message });
     }
   };
 
