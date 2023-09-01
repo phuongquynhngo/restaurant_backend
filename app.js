@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import categoryRoutes from './routes/category.routes.js';
 import itemRoutes from './routes/item.routes.js';
+import userRoutes from './routes/user.routes.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import corsOptions from './config/corsOptions.js';
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Set up category and item routes using the exported functions
 categoryRoutes(app);
 itemRoutes(app);
+userRoutes(app);
 
 
 import db from './models/index.js';

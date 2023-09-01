@@ -27,6 +27,7 @@
 import { Sequelize } from "sequelize";
 import CategoryModel from "./category.model.js";
 import ItemModel from "./item.model.js";
+import UserModel from "./user.model.js";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -49,6 +50,7 @@ db.sequelize = sequelize;
 
 db.categories = CategoryModel(sequelize, Sequelize);
 db.items = ItemModel(sequelize, Sequelize);
+db.users = UserModel(sequelize, Sequelize);
 
 //define associations between models
 //one category can have multiple items
