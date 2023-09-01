@@ -4,15 +4,16 @@ import categoryRoutes from './routes/category.routes.js';
 import itemRoutes from './routes/item.routes.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import corsOptions from './config/corsOptions.js';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
+// var corsOptions = {
+//   origin: "http://localhost:5173"
+// };
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
