@@ -12,9 +12,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// var corsOptions = {
-//   origin: "http://localhost:5173"
-// };
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json

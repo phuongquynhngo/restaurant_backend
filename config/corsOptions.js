@@ -1,4 +1,4 @@
-// Cross origon Resourcse Sharing
+// Cross origin Resources Sharing
 const whitelist = [
     'http://localhost:3001',
     'http://localhost:5173'

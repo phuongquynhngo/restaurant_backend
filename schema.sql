@@ -132,6 +132,7 @@ FULL JOIN items ON categories.id = items.category_id; */
 
 
 
-
+-- @block
+SELECT * FROM users;
 
 
