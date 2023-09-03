@@ -1,10 +1,6 @@
 import db from "../models/index.js";
 const  User  = db.users;
-import { promises as fsPromises } from 'fs';
-import path from 'path';
 import bcrypt from 'bcrypt';
-
-
 
 // // Create and Save a new User
 // export const createUser = (req, res) => {

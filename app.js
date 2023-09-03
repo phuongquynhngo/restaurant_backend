@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.route.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import corsOptions from './config/corsOptions.js';
+import verifyJWT from './middleware/verifyJWT.js';
 
 dotenv.config();
 
@@ -21,13 +22,18 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to restaurant backend application." });
+});
 
-// Set up category and item routes using the exported functions
+// Set up routes using the exported functions
 categoryRoutes(app);
 itemRoutes(app);
-userRoutes(app);
 authRoutes(app);
 
+app.use(verifyJWT);
+userRoutes(app);
 
 import db from './models/index.js';
 db.sequelize.sync()
@@ -37,11 +43,6 @@ db.sequelize.sync()
   .catch((err) => {
     console.log("Failed to sync db: " + err.message);
   });
-
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to restaurant backend application." });
-});
 
 
 
