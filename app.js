@@ -10,6 +10,7 @@ import cors from 'cors';
 import corsOptions from './config/corsOptions.js';
 import verifyJWT from './middleware/verify.js';
 import cookieParser from 'cookie-parser';
+import cookieSession from 'cookie-session';
 
 
 dotenv.config();
@@ -27,6 +28,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //middleware for cookies
 app.use(cookieParser());
+
+app.use(
+  cookieSession({
+    name: "quynh-session",
+    secret: process.env.COOKIE_SECRET, 
+    httpOnly: true,
+  })
+);
 
 // simple route
 app.get("/", (req, res) => {

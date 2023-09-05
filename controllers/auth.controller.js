@@ -54,7 +54,7 @@ const handleLogin = async (req, res) => {
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '1d' }
       );
-
+      req.session.token = accessToken;
 
       // Set the refreshToken as an HTTP-only cookie
       res.cookie('jwt', refreshToken, {
