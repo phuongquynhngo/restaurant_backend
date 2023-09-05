@@ -1,6 +1,6 @@
 import express from "express";
 import * as items from '../controllers/item.controller.js';
-import verifyJWT from '../middleware/verifyJWT.js';
+import verifyJWT from '../middleware/verify.js';
 
 const router = express.Router();
 

@@ -8,7 +8,7 @@ import refreshRoute from './routes/refresh.route.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import corsOptions from './config/corsOptions.js';
-import verifyJWT from './middleware/verifyJWT.js';
+import verifyJWT from './middleware/verify.js';
 import cookieParser from 'cookie-parser';
 
 

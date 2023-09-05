@@ -42,17 +42,19 @@ const handleLogin = async (req, res) => {
       // Construct authorities array
       const authorities = userRoles.map(role => `${role.name}`);
 
-      // Create JWTs
+      // Create JWTs with user ID in the payload
       const accessToken = jwt.sign(
-        { username: foundUser.username },
+        { id: foundUser.id, username: foundUser.username },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '30s' }
+        { expiresIn: '300s' }
       );
+      
       const refreshToken = jwt.sign(
-        { username: foundUser.username },
+        { id: foundUser.id, username: foundUser.username },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '1d' }
       );
+
 
       // Set the refreshToken as an HTTP-only cookie
       res.cookie('jwt', refreshToken, {

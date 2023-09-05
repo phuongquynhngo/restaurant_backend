@@ -1,13 +1,17 @@
 import express from "express";
 import * as users from '../controllers/user.controller.js';
 
+import  authJwt from '../middleware/verify.js';
+
 const router = express.Router();
 
 // Create a new user
-router.post("/", users.createUser);
+router.post("/",
+           [authJwt.verifyToken, authJwt.isAdmin],  // Middleware functions in the desired order
+           users.createUser);
 
 // Retrieve all users
-router.get("/", users.getAllUsers);
+router.get("/",  users.getAllUsers);
 
 // Retrieve a single User with id
 router.get("/:id", users.getUserByID);

@@ -15,12 +15,11 @@ const handleRefreshToken = (req, res) => {
       process.env.REFRESH_TOKEN_SECRET,
       (err, decoded) => {
         if (err) return res.sendStatus(403); // Forbidden
-  
         // the refresh token is valid, issue a new access token
         const accessToken = jwt.sign(
           { username: decoded.username },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: '30s' }
+          { expiresIn: '300s' }
         );
         res.json({ accessToken });
       }
