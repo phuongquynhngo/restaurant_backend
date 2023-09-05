@@ -1,5 +1,5 @@
 import db from "../models/index.js";
-const  Category  = db.categories;
+const  Category  = db.category;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Category

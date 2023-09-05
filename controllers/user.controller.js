@@ -1,6 +1,8 @@
 import db from "../models/index.js";
-const  User  = db.users;
+const  User  = db.user;
+const Role = db.role;
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 // // Create and Save a new User
 // export const createUser = (req, res) => {
@@ -36,50 +38,97 @@ import bcrypt from 'bcrypt';
 // };
 
 export const createUser = async (req, res) => {
-    const { name, email, username, password } = req.body;
-  
-    if (!name || !email || !username || !password) {
-      return res.status(400).json({ 'message': 'Name, email, username, and password are required.' });
+  const { name, email, username, password, roles } = req.body;
+
+  if (!name || !email || !username || !password) {
+    return res.status(400).json({ message: 'Name, email, username, and password are required.' });
+  }
+
+  try {
+    // Check for duplicate username and email in the database
+    const isDuplicateUsername = await checkForDuplicateUsername(username);
+    const isDuplicateEmail = await checkForDuplicateEmail(email);
+
+    if (isDuplicateUsername) {
+      return res.status(409).json({ message: 'Username already exists.' });
     }
-  
-    try {
-      // Check for duplicate usernames in the database 
-      const duplicate = await checkForDuplicateUsername(username);
-  
-      if (duplicate) {
-        return res.status(409).json({ 'message': 'Username already exists.' });
+
+    if (isDuplicateEmail) {
+      return res.status(409).json({ message: 'Email already exists.' });
+    }
+
+    // Encrypt the password: hash and salt passwords with bcrypt
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a User object
+    const user = {
+      name,
+      email,
+      username,
+      password: hashedPassword,
+    };
+
+    // logic to save the user
+    const newUser = await saveUserToDatabase(user);
+
+    // Check if roles are provided, otherwise assign the default role with ID 1
+    if (!roles || roles.length === 0) {
+      const defaultRole = await Role.findOne({ where: { id: 1 } });
+      if (defaultRole) {
+        console.log('Before addRoles default');
+        await newUser.addRoles([defaultRole]);
+        console.log('After addRoles default'); // Use addRoles to associate with multiple roles
+      } else {
+        console.error('Default role with ID 1 not found in the database.');
+        // Handle this error as needed, such as sending an error response.
       }
-  
-      // Encrypt the password: hash and salt passwords with bcrypt
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      // Create a User object
-      const user = {
-        name,
-        email,
-        username,
-        password: hashedPassword,
-      };
-  
-      // logic to save the user
-      await saveUserToDatabase(user);
-  
-      // Respond with a success message
-      res.status(201).json({ 'message': `New user ${username} created!` });
-    } catch (err) {
-      res.status(500).json({ 'message': err.message });
+    } else {
+      const foundRoles = await Role.findAll({
+        where: {
+          name: roles,
+        },
+      });
+    
+      if (foundRoles.length > 0) {
+        console.log('Before addRoles foundRoles');
+        await newUser.addRoles(foundRoles); // Use addRoles to associate with multiple roles
+        console.log('After addRoles foundRoles');
+      } else {
+        console.error('Roles not found in the database.');
+        // Handle this error as needed, such as sending an error response.
+      }
     }
+    // Respond with a success message
+    res.status(201).json({ message: `New user ${username} created!` });
+  } catch (err) {
+    console.error(err);
+    // Handle the database query error here.
+    res.status(500).json({ message: 'Internal Server Error' });
   };
+};
 
 async function checkForDuplicateUsername(username) {
     const user = await User.findOne({ where: { username } });
     return !!user; // Returns true if a duplicate is found, false otherwise
   };
+
+async function checkForDuplicateEmail(email) {
+    const user = await User.findOne({ where: { email } });
+    return !!user; // Returns true if a duplicate is found, false otherwise
+  };
   
 async function saveUserToDatabase(user) {
-    await User.create(user);
+  try {
+    const newUser = await User.create(user);
+    console.log('User created successfully:', newUser.toJSON());
+    debugger; // Add a debugger statement
+    return newUser;
+    } catch (error) {
+      console.error('Error creating user:', error);
+      throw error;
+    }
   };
-
+  
 
 // Retrieve all users from the database.
 // export const getAllUsers = (req, res) => {

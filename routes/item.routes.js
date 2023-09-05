@@ -5,7 +5,7 @@ import verifyJWT from '../middleware/verifyJWT.js';
 const router = express.Router();
 
 // Create a new item
-router.post("/", verifyJWT, items.createItem);
+router.post("/",  items.createItem);
 
 // Retrieve all items
 router.get("/", items.getAllItems);
@@ -14,13 +14,13 @@ router.get("/", items.getAllItems);
 router.get("/:id", items.getItemByID);
 
 // Update an item with id
-router.put("/:id", verifyJWT, items.updateItem);
+router.put("/:id",  items.updateItem);
 
 // Delete an item with id
-router.delete("/:id", verifyJWT, items.deleteItem);
+router.delete("/:id",  items.deleteItem);
 
 // Delete all items
-router.delete("/", verifyJWT, items.deleteAllItems);
+router.delete("/",  items.deleteAllItems);
 
 export default app => {
     app.use('/api/items', router);

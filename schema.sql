@@ -89,7 +89,10 @@ VALUES
 SELECT * FROM items;
 
 -- @block
-DROP TABLE items;
+DROP TABLE users;
+
+-- @block
+DROP TABLE user_roles;
 
 
 -- @block 
@@ -135,4 +138,41 @@ FULL JOIN items ON categories.id = items.category_id; */
 -- @block
 SELECT * FROM users;
 
+-- @block
+SELECT * FROM user_roles;
 
+
+-- @block
+SELECT * FROM roles;
+
+-- @block
+INSERT INTO roles (name )
+VALUES 
+('moderator'),
+('admin');
+
+-- @block
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` INTEGER AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `createdAt` DATETIME NOT NULL,
+  `updatedAt` DATETIME NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+-- @block
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `user_id` INTEGER,
+  `role_id` INTEGER,
+  PRIMARY KEY (`user_id`, `role_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+-- @block
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` INTEGER AUTO_INCREMENT,
+  `role_name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;

@@ -1,5 +1,5 @@
 import db from "../models/index.js";
-const Item = db.items;
+const Item = db.item;
 
 // Create and Save a new Item
 export const createItem = (req, res) => {

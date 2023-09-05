@@ -1,8 +1,8 @@
 import db from "../models/index.js";
-const  User  = db.users;
+const  User  = db.user;
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -40,7 +40,7 @@ const handleLogin = async (req, res) => {
         const accessToken = jwt.sign(
           { username: foundUser.username },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: '120s' }
+          { expiresIn: '30s' }
         );
         const refreshToken = jwt.sign(
           { username: foundUser.username },
@@ -49,8 +49,8 @@ const handleLogin = async (req, res) => {
         );
   
         // Update the user's refreshToken in the database (invalidate when user logouts)
-        foundUser.refreshToken = refreshToken;
-        await foundUser.save();
+        // foundUser.refreshToken = refreshToken;
+        // await foundUser.save();
   
         // Set the refreshToken as an HTTP-only cookie
         res.cookie('jwt', refreshToken, {

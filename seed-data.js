@@ -1,8 +1,8 @@
 // Run the Seeding Script: node seed-data.js
 
 import db from './models/index.js';
-const  Category  = db.categories;
-const  Item  = db.items;
+const  Category  = db.category;
+const  Item  = db.item;
 
 
 const seedData = async () => {
