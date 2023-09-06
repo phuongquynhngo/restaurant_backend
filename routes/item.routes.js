@@ -1,11 +1,11 @@
 import express from "express";
 import * as items from '../controllers/item.controller.js';
-import verifyJWT from '../middleware/verify.js';
+import authJwt from '../middleware/verify.js';
 
 const router = express.Router();
 
 // Create a new item
-router.post("/",  items.createItem);
+router.post("/", [authJwt.verifyToken, authJwt.isModeratorOrAdmin], items.createItem);
 
 // Retrieve all items
 router.get("/", items.getAllItems);
@@ -14,13 +14,13 @@ router.get("/", items.getAllItems);
 router.get("/:id", items.getItemByID);
 
 // Update an item with id
-router.put("/:id",  items.updateItem);
+router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin], items.updateItem);
 
 // Delete an item with id
-router.delete("/:id",  items.deleteItem);
+router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin], items.deleteItem);
 
 // Delete all items
-router.delete("/",  items.deleteAllItems);
+router.delete("/", [authJwt.verifyToken, authJwt.isAdmin], items.deleteAllItems);
 
 export default app => {
     app.use('/api/items', router);
