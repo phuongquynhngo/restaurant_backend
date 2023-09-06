@@ -54,7 +54,7 @@ const handleLogin = async (req, res) => {
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '1d' }
       );
-      req.session.token = accessToken;
+      // req.session.token = accessToken;
 
       // Set the refreshToken as an HTTP-only cookie
       res.cookie('jwt', refreshToken, {
@@ -70,6 +70,7 @@ const handleLogin = async (req, res) => {
         email: foundUser.email,
         roles: authorities,
         accessToken,
+        refreshToken,
       });
     } else {
       res.status(401).json({ message: 'Unauthorized' });

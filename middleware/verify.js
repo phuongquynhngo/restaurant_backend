@@ -5,9 +5,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const verifyToken = (req, res, next) => {
-  // let token = req.headers["x-access-token"];
+  let token = req.headers["x-access-token"];
 
-  let token = req.session.token; //token from session of HTTP request object
+  // let token = req.session.token; //token from session of HTTP request object
 
   if (!token) {
     return res.status(403).send({

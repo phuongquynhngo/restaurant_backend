@@ -11,7 +11,7 @@ router.post("/",
            users.createUser);
 
 // Retrieve all users
-router.get("/",  users.getAllUsers);
+router.get("/",[authJwt.verifyToken],  users.getAllUsers);
 
 // Retrieve a single User with id
 router.get("/:id", users.getUserByID);

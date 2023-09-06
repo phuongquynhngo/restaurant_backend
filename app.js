@@ -8,9 +8,9 @@ import refreshRoute from './routes/refresh.route.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import corsOptions from './config/corsOptions.js';
-import verifyJWT from './middleware/verify.js';
+import verifyMiddleware from './middleware/verify.js';
 import cookieParser from 'cookie-parser';
-import cookieSession from 'cookie-session';
+// import cookieSession from 'cookie-session';
 
 
 dotenv.config();
@@ -29,13 +29,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //middleware for cookies
 app.use(cookieParser());
 
-app.use(
-  cookieSession({
-    name: "quynh-session",
-    secret: process.env.COOKIE_SECRET, 
-    httpOnly: true,
-  })
-);
+// app.use(
+//   cookieSession({
+//     name: "quynh-session",
+//     secret: process.env.COOKIE_SECRET, 
+//     httpOnly: true,
+//   })
+// );
 
 // simple route
 app.get("/", (req, res) => {
@@ -48,7 +48,7 @@ itemRoutes(app);
 authRoute(app);
 refreshRoute(app);
 
-// app.use(verifyJWT);
+// app.use(verifyMiddleware);
 userRoutes(app);
 
 
