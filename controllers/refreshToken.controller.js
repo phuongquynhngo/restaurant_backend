@@ -26,7 +26,7 @@ const handleRefreshToken = (req, res) => {
           const newAccessToken = jwt.sign(
             { id: userId },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '300s' }
+            { expiresIn: '600s' }
           );
     
         //   res.json({ accessToken });

@@ -161,6 +161,14 @@ export const getAllUsers = (req, res) => {
     where: condition,
     limit,
     offset,
+    include: [
+      {
+        model: Role, //Role model
+        as: 'roles', //match the association alias in User model
+        attributes: ['name'], // Include only the 'name' attribute of the roles
+        through: { attributes: [] }, // Exclude the join table attributes
+      },
+    ],
   })
     .then(data => {
       const totalPages = Math.ceil(data.count / limit);
