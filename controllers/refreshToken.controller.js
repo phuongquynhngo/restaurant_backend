@@ -32,7 +32,6 @@ const handleRefreshToken = (req, res) => {
         //   res.json({ accessToken });
           return res.status(200).json({
             accessToken: newAccessToken,
-            // refreshToken: refreshToken,
           });
         });
       } catch (err) {

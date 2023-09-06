@@ -21,7 +21,8 @@ dotenv.config();
 //     }
 // }
 
-const handleLogin = async (req, res) => {
+//controller function for signing in
+export const handleLogin = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -81,5 +82,8 @@ const handleLogin = async (req, res) => {
   }
 };
 
-
-export default { handleLogin };
+//controller function for signing out
+export const signOut = (req, res) => {
+  res.clearCookie('jwt'); // Clear the access token cookie
+  res.status(200).json({ message: 'Sign out successful' });
+};

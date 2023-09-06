@@ -1,6 +1,5 @@
 import express from "express";
 import * as users from '../controllers/user.controller.js';
-
 import  authJwt from '../middleware/verify.js';
 
 const router = express.Router();
@@ -11,19 +10,19 @@ router.post("/",
            users.createUser);
 
 // Retrieve all users
-router.get("/",[authJwt.verifyToken],  users.getAllUsers);
+router.get("/", [authJwt.verifyToken],  users.getAllUsers);
 
 // Retrieve a single User with id
-router.get("/:id", users.getUserByID);
+router.get("/:id", [authJwt.verifyToken], users.getUserByID);
 
 // Update an user with id
-router.put("/:id", users.updateUser);
+router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin], users.updateUser);
 
 // Delete an user with id
-router.delete("/:id", users.deleteUser);
+router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin],  users.deleteUser);
 
 // Delete all users
-router.delete("/", users.deleteAllUsers);
+router.delete("/", [authJwt.verifyToken, authJwt.isAdmin], users.deleteAllUsers);
 
 export default app => {
     app.use('/api/users', router);
