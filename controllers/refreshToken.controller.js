@@ -10,19 +10,35 @@ const handleRefreshToken = (req, res) => {
     if (!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
   
-    jwt.verify(
-      refreshToken,
-      process.env.REFRESH_TOKEN_SECRET,
-      (err, decoded) => {
-        if (err) return res.sendStatus(403); // Forbidden
-        // the refresh token is valid, issue a new access token
-        const accessToken = jwt.sign(
-          { id: foundUser.id, username: foundUser.username },
-          process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: '300s' }
-        );
-        res.json({ accessToken });
+    if (!refreshToken) {
+        return res.status(403).json({ message: "Refresh Token is required!" });
       }
-    );
+    
+      try {
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decoded) => {
+          if (err) {
+            return res.sendStatus(403); // Forbidden
+          }
+    
+          const userId = decoded.id;
+    
+          // Create a new access token with user ID in the payload
+          const newAccessToken = jwt.sign(
+            { id: userId },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: '300s' }
+          );
+    
+        //   res.json({ accessToken });
+          return res.status(200).json({
+            accessToken: newAccessToken,
+            // refreshToken: refreshToken,
+          });
+        });
+      } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Internal Server Error' });
+      }
   };
-export default { handleRefreshToken }
+  
+  export default { handleRefreshToken };
