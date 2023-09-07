@@ -29,8 +29,8 @@ export const createOrder =  async (req, res) => {
         quantity: product.quantity
       });
     }
-
-    return res.status(201).json({ order });
+    // return res.status(201).json({ order });
+    return res.status(201).json({ message: `Order create successful!` });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -71,9 +71,25 @@ export const getAllOrders = async (req, res) => {
 export const getOrderById = async (req, res) => {
   try {
     const orderId = req.params.id;
-    const order = await Order.findByPk(orderId, {
-      include: [{ model: OrderItem, include: [Item] }]
-    });
+    // const order = await Order.findByPk(orderId, {
+    //   include: [{ model: OrderItem, include: [Item] }]
+    // });
+
+    const order = await Order.findByPk(orderId,{
+        include: [
+          { 
+            model: OrderItem,
+            as: 'order_items',
+            attributes: ['quantity', 'item_id'],
+            include: [
+              {
+                model: Item,
+                attributes: ['name', 'description', 'price', 'image']
+              }
+            ]
+          }
+        ]
+      });
 
     if (!order) {
       return res.status(404).json({ error: `Order with ID ${orderId} not found` });
