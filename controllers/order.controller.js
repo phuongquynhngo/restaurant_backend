@@ -40,8 +40,24 @@ export const createOrder =  async (req, res) => {
 export const getAllOrders = async (req, res) => {
   try {
     // const orders = await Order.findAll();
+    // const orders = await Order.findAll({
+    //     include: [{ model: OrderItem, include: [Item] }]
+    //   });
+
     const orders = await Order.findAll({
-        include: [{ model: OrderItem, include: [Item] }]
+        include: [
+          { 
+            model: OrderItem,
+            as: 'order_items',
+            attributes: ['quantity', 'item_id'],
+            include: [
+              {
+                model: Item,
+                attributes: ['name', 'description', 'price', 'image']
+              }
+            ]
+          }
+        ]
       });
   
 

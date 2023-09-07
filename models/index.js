@@ -96,7 +96,20 @@ db.user.belongsToMany(db.role, {
       //Junction table (user_role): This table establishes the many-to-many relationship between users and roles.  
 db.ROLES = ["user", "admin", "moderator"];
 
-db.order.hasMany(db.orderItem, { foreignKey: 'order_id' });
-db.item.hasMany(db.orderItem, { foreignKey: 'item_id' });
+db.order.hasMany(db.orderItem, {
+  foreignKey: 'order_id' 
+});
+db.item.hasMany(db.orderItem, {
+  foreignKey: 'item_id' 
+});
+
+db.orderItem.belongsTo(db.order, {
+  foreignKey: 'order_id'
+
+});
+db.orderItem.belongsTo(db.item, {
+  foreignKey: 'item_id' 
+
+});
 
 export default db;

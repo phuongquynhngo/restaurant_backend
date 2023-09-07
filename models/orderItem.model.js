@@ -5,9 +5,8 @@ const OrderItemModel = (sequelize, Sequelize) => {
         allowNull: false
       }
     });
-  
     return OrderItem;
   };
-  
+
   export default OrderItemModel;
   
