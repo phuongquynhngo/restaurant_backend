@@ -25,6 +25,10 @@ const ItemModel = (sequelize, Sequelize) => {
     });
   };
 
+  Item.associate = models => {
+    Item.hasMany(models.OrderItem, { foreignKey: 'item_id' });
+  };
+
   return Item;
 };
 

@@ -29,6 +29,8 @@ import CategoryModel from "./category.model.js";
 import ItemModel from "./item.model.js";
 import UserModel from "./user.model.js";
 import RoleModel from "./role.model.js";
+import OrderModel from "./order.model.js";
+import OrderItemModel from "./orderItem.model.js";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -60,6 +62,9 @@ db.category = CategoryModel(sequelize, Sequelize);
 db.item = ItemModel(sequelize, Sequelize);
 db.user = UserModel(sequelize, Sequelize);
 db.role = RoleModel(sequelize, Sequelize);
+db.order = OrderModel(sequelize, Sequelize);
+db.orderItem = OrderItemModel(sequelize, Sequelize);
+
 
 //define associations between models
 //one category can have multiple items
@@ -74,7 +79,7 @@ db.item.belongsTo(db.category, {
 
 // One Role can be taken on by many Users
 db.role.belongsToMany(db.user, {
-    through: "user_roles",
+    through: "user_role",
     foreignKey: 'roleId'
     
   });
@@ -82,13 +87,16 @@ db.role.belongsToMany(db.user, {
 // retrieve the user's roles
 // This association uses the roles field in the users table, which is an array of role IDs
 db.user.belongsToMany(db.role, {
-    through: "user_roles",
+    through: "user_role",
     foreignKey: 'userId' 
+
   });
 
       //role-based access control (RBAC) system
-      //Junction table (user_roles): This table establishes the many-to-many relationship between users and roles.
-  
+      //Junction table (user_role): This table establishes the many-to-many relationship between users and roles.  
 db.ROLES = ["user", "admin", "moderator"];
+
+db.order.hasMany(db.orderItem, { foreignKey: 'order_id' });
+db.item.hasMany(db.orderItem, { foreignKey: 'item_id' });
 
 export default db;

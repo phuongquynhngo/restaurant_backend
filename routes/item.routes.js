@@ -1,26 +1,26 @@
 import express from "express";
-import * as items from '../controllers/item.controller.js';
+import * as item from '../controllers/item.controller.js';
 import authJwt from '../middleware/verify.js';
 
 const router = express.Router();
 
 // Create a new item
-router.post("/", [authJwt.verifyToken, authJwt.isModeratorOrAdmin], items.createItem);
+router.post("/", [authJwt.verifyToken, authJwt.isModeratorOrAdmin], item.createItem);
 
 // Retrieve all items
-router.get("/", items.getAllItems);
+router.get("/", item.getAllItems);
 
 // Retrieve a single item with id
-router.get("/:id", items.getItemByID);
+router.get("/:id", item.getItemByID);
 
 // Update an item with id
-router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin], items.updateItem);
+router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin], item.updateItem);
 
 // Delete an item with id
-router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin], items.deleteItem);
+router.delete("/:id", [authJwt.verifyToken, authJwt.isAdmin], item.deleteItem);
 
 // Delete all items
-router.delete("/", [authJwt.verifyToken, authJwt.isAdmin], items.deleteAllItems);
+router.delete("/", [authJwt.verifyToken, authJwt.isAdmin], item.deleteAllItems);
 
 export default app => {
     app.use('/api/items', router);

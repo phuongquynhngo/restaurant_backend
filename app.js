@@ -5,10 +5,11 @@ import itemRoutes from './routes/item.routes.js';
 import userRoutes from './routes/user.routes.js';
 import authRoute from './routes/auth.route.js';
 import refreshRoute from './routes/refresh.route.js';
+import orderRoute from './routes/order.routes.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import corsOptions from './config/corsOptions.js';
-import verifyMiddleware from './middleware/verify.js';
+import  authJwt from './middleware/verify.js';
 import cookieParser from 'cookie-parser';
 // import cookieSession from 'cookie-session';
 
@@ -47,8 +48,9 @@ categoryRoutes(app);
 itemRoutes(app);
 authRoute(app);
 refreshRoute(app);
+orderRoute(app);
 
-// app.use(verifyMiddleware);
+// app.use(authJwt.verifyToken);
 userRoutes(app);
 
 

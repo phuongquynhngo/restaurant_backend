@@ -49,6 +49,19 @@ export const getAllItems = (req, res) => {
     });
 };
 
+// export const getAllOrders = (req, res) => {
+//   Order.findAll()
+//     .then(data => {
+//       res.send(data);
+//     })
+//     .catch(err => {
+//       res.status(500).send({
+//         message: err.message || "Some error occurred while retrieving orders."
+//       });
+//     });
+// };
+
+
 
 // Get Item by ID
 export const getItemByID = (req, res) => {
