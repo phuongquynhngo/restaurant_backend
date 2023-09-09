@@ -18,6 +18,7 @@ const ItemModel = (sequelize, Sequelize) => {
   }, {
     timestamps: true // Enable timestamps (createdAt and updatedAt fields)
   });
+  
   return Item;
 };
 

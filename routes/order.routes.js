@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/", order.createOrder);
 
 // Retrieve all orders
-router.get("/", [authJwt.verifyToken], order.getAllOrders);
+router.get("/",  order.getAllOrders);
 
 // Retrieve a single order with id
 router.get("/:id", [authJwt.verifyToken], order.getOrderById);

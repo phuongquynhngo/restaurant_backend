@@ -92,7 +92,7 @@ SELECT * FROM items;
 DROP TABLE users;
 
 -- @block
-DROP TABLE user_roles;
+DROP TABLE user_role;
 
 
 -- @block 
@@ -139,7 +139,7 @@ FULL JOIN items ON categories.id = items.category_id; */
 SELECT * FROM users;
 
 -- @block
-SELECT * FROM user_roles;
+SELECT * FROM user_role;
 
 
 -- @block
@@ -176,3 +176,21 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `role_name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+
+
+-- @block
+SELECT * FROM orders;
+
+-- @block
+SELECT * FROM items;
+
+-- @block
+SELECT * FROM order_items;
+
+
+-- @block
+DROP TABLE order_items;
+
+-- @block
+DROP TABLE orders;

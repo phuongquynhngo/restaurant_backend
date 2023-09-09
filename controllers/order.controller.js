@@ -30,7 +30,7 @@ export const createOrder =  async (req, res) => {
       });
     }
     // return res.status(201).json({ order });
-    return res.status(201).json({ message: `Order create successful!` });
+    return res.status(201).json({ success: true, data: { message: `Order create successful!` } });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
