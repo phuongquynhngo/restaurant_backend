@@ -29,6 +29,7 @@ export const createOrder =  async (req, res) => {
         quantity: product.quantity
       });
     }
+
     // return res.status(201).json({ order });
     return res.status(201).json({ success: true, data: { message: `Order create successful!` } });
   } catch (error) {

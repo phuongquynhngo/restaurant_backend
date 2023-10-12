@@ -8,10 +8,10 @@ const router = express.Router();
 router.post("/", order.createOrder);
 
 // Retrieve all orders
-router.get("/",  order.getAllOrders);
+router.get("/",  [authJwt.verifyToken, authJwt.isModeratorOrAdmin], order.getAllOrders);
 
 // Retrieve a single order with id
-router.get("/:id", [authJwt.verifyToken], order.getOrderById);
+router.get("/:id",  [authJwt.verifyToken, authJwt.isModeratorOrAdmin],  order.getOrderById);
 
 // Update an order with id
 router.put("/:id", [authJwt.verifyToken, authJwt.isModeratorOrAdmin], order.updateOrder);
